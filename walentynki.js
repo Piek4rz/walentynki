@@ -76,39 +76,66 @@ popup.addEventListener('click', (e) => {
 });
 
 happyBday.addEventListener('click', (e) => {
-    mainImage.src = "bday-cat.png"
-    mainText.textContent = "WSZYSTKIEGO NAJLEPSZEGO!!! 🎈🎈🎈"
-    document.body.style.backgroundColor = '#ffeb3b';
+    mainImage.src = "flower-cat.jpg"
+    mainText.textContent = "Dla najlepszego testera"
+    document.body.style.backgroundColor = '#b73bff';
     btnsDiv.style.display= "none"
 
-    const duration = 15 * 1000,
-    animationEnd = Date.now() + duration,
-    defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+const defaults = {
+  spread: 360,
+  ticks: 100,
+  gravity: 0,
+  decay: 0.94,
+  startVelocity: 30,
+  shapes: ["heart"],
+  colors: ["FFC0CB", "FF69B4", "FF1493", "C71585"],
+};
 
-    function randomInRange(min, max) {
-    return Math.random() * (max - min) + min;
-    }
+confetti({
+  ...defaults,
+  particleCount: 50,
+  scalar: 2,
+});
 
-    const interval = setInterval(function() {
-    const timeLeft = animationEnd - Date.now();
+confetti({
+  ...defaults,
+  particleCount: 25,
+  scalar: 3,
+});
 
-    if (timeLeft <= 0) {
-        return clearInterval(interval);
-    }
+confetti({
+  ...defaults,
+  particleCount: 10,
+  scalar: 4,
+});
 
-    const particleCount = 50 * (timeLeft / duration);
+const defaults2 = {
+  spread: 360,
+  ticks: 50,
+  gravity: 0,
+  decay: 0.94,
+  startVelocity: 30,
+  shapes: ["star"],
+  colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+};
 
-    confetti(
-        Object.assign({}, defaults, {
-        particleCount,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-        })
-    );
-    confetti(
-        Object.assign({}, defaults, {
-        particleCount,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-        })
-    );
-    }, 250);
+function shoot() {
+  confetti({
+    ...defaults2,
+    particleCount: 40,
+    scalar: 1.2,
+    shapes: ["star"],
+  });
+
+  confetti({
+    ...defaults2,
+    particleCount: 10,
+    scalar: 0.75,
+    shapes: ["circle"],
+  });
+}
+
+setTimeout(shoot, 0);
+setTimeout(shoot, 100);
+setTimeout(shoot, 200);
 })
