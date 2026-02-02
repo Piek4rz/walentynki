@@ -8,6 +8,9 @@ const mainImage = document.querySelector('.thumbnail-img')
 const mainText = document.querySelector('.header-div')
 
 let isMoving = false;
+let lastX = null;
+let lastY = null;
+const radius = 100; 
 
 noBtn.addEventListener('mouseenter', () => {
     const btn = noBtn.getBoundingClientRect();
@@ -27,17 +30,29 @@ noBtn.addEventListener('mouseenter', () => {
         noBtn.style.left = btn.left + 'px';
         noBtn.style.top = btn.top + 'px';
 
+        lastX = btn.left;
+        lastY = btn.top;
         isMoving = true;
     }
 
     const maxX = vw - btn.width;
     const maxY = vh - btn.height;
+    let x, y, dx, dy, distance;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    do {
+        x = Math.random() * maxX;
+        y = Math.random() * maxY;
+
+        dx = x - lastX;
+        dy = y - lastY;
+        distance = Math.sqrt(dx * dx + dy * dy);
+    } while (distance < radius); 
 
     noBtn.style.left = x + 'px';
     noBtn.style.top = y + 'px';
+
+    lastX = x;
+    lastY = y;
 });
 noBtn.addEventListener('touchstart', e => {
     e.preventDefault();
